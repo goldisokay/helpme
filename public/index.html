@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HelpMe! — Panduan Pertolongan Pertama untuk PMR WIRA</title>
+  <meta name="description" content="Platform edukasi dan asisten cerdas pertolongan pertama berbasis knowledge base resmi Palang Merah Indonesia (PMI) khusus anggota PMR tingkat WIRA.">
+  <meta name="keywords" content="PMR Wira, Pertolongan Pertama, Palang Merah Indonesia, PMI, First Aid, RAG, AI Assistant, Kedaruratan Medis">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23DC2626%22/><path d=%22M38 20h24v24h24v16H62v24H38V60H14V44h24z%22 fill=%22%23ffffff%22/></svg>">
+</head>
+<body>
+  <div class="bg-glow"></div>
+
+  <div id="app-container">
+    <!-- NAVBAR -->
+    <header class="navbar">
+      <div class="nav-brand" data-view="landing">
+        <div class="brand-cross">+</div>
+        <div class="brand-text">
+          <h1>HelpMe! <span class="brand-badge">PMR WIRA</span></h1>
+          <span class="brand-tagline">Panduan Pertolongan Pertama PMR WIRA</span>
+        </div>
+      </div>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#landing" class="nav-link active" data-view="landing">Beranda</a></li>
+          <li><a href="#chat" class="nav-link" data-view="chat">Tanya HelpMe!</a></li>
+          <li><a href="#materials" class="nav-link" data-view="materials">Materi Panduan</a></li>
+          <li><a href="#sources" class="nav-link" data-view="sources">Sumber & Pedoman</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions" id="nav-user-actions">
+        <!-- Injected via app.js (User profile or Login/Register buttons) -->
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT ROUTER VIEWS -->
+    <main class="main-content">
+      
+      <!-- 1. LANDING PAGE -->
+      <section id="view-landing" class="view-section active">
+        <div class="hero-section">
+          <div class="hero-pill">
+            <span>🛡️</span> Berbasis Knowledge Base Resmi PMI PMR WIRA (Juni 2008)
+          </div>
+          <h1 class="hero-title">
+            Pertolongan Pertama Tepat,<br>Akurat & Terverifikasi
+          </h1>
+          <p class="hero-subtitle">
+            Asisten rujukan cerdas khusus anggota Palang Merah Remaja (PMR) tingkat WIRA. Ditenagai sistem RAG berlandaskan buku pedoman resmi Palang Merah Indonesia dengan standar keselamatan penolong (3A).
+          </p>
+
+          <div class="hero-cta">
+            <button class="btn btn-primary btn-lg" data-view="chat">
+              💬 Mulai Tanya HelpMe!
+            </button>
+            <button class="btn btn-secondary btn-lg" data-view="materials">
+              📚 Telusuri Ensiklopedia Materi
+            </button>
+          </div>
+
+          <!-- Quick Search Bar -->
+          <div style="max-width: 650px; margin: 0 auto 3rem;">
+            <div class="chat-form" style="padding: 0.6rem 1rem;">
+              <span style="font-size: 1.2rem; color: var(--text-subtle);">🔍</span>
+              <input type="text" id="quick-search-input" class="chat-input" placeholder="Cari penanganan cepat: penilaian korban, luka bakar, patah tulang, pingsan...">
+              <button class="btn btn-primary btn-sm" onclick="navigateTo('chat', { initialQuery: document.getElementById('quick-search-input').value })">Tanya AI</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUICK EMERGENCY TOPICS -->
+        <div class="quick-topics-container">
+          <div class="section-header">
+            <h2 class="section-title">
+              <span>⚡</span> Topik Kedaruratan Populer
+            </h2>
+            <a href="#materials" class="nav-link" data-view="materials" style="padding:0;color:#FDA4AF;">Lihat Semua Materi →</a>
+          </div>
+
+          <div class="quick-grid">
+            <div class="topic-card" data-query="Bagaimana langkah penilaian korban ASNT dan tanda vital menurut buku PMI?">
+              <div class="topic-icon">📋</div>
+              <h3 class="topic-title">Penilaian Korban</h3>
+              <p class="topic-desc">Penilaian Keadaan (3A), Penilaian Dini (Respon ASNT), Tanda Vital (Nadi, Napas, Suhu), dan Riwayat KOMPAK.</p>
+              <div class="topic-meta">
+                <span>Bab: Penilaian Korban</span>
+                <span class="badge badge-primary">Hal. 13-22</span>
+              </div>
+            </div>
+
+            <div class="topic-card" data-query="Bagaimana pertolongan pertama pendarahan luar pada anggota PMR Wira?">
+              <div class="topic-icon">🩸</div>
+              <h3 class="topic-title">Perdarahan Luar</h3>
+              <p class="topic-desc">Tekanan langsung pada luka, pembalutan cepat, elevasi anggota gerak, dan antisipasi tanda-tanda syok.</p>
+              <div class="topic-meta">
+                <span>Bab: Cedera Jaringan Lunak</span>
+                <span class="badge badge-primary">Hal. 23-26</span>
+              </div>
+            </div>
+
+            <div class="topic-card" data-query="Apa pertolongan pertama untuk luka bakar dan cara menghitung luas luka bakar?">
+              <div class="topic-icon">🔥</div>
+              <h3 class="topic-title">Luka Bakar</h3>
+              <p class="topic-desc">Derajat 1, 2, dan 3, rumus Rule of Nines, dan pengaliran air bersih mengalir selama minimal 10-20 menit.</p>
+              <div class="topic-meta">
+                <span>Bab: Luka Bakar</span>
+                <span class="badge badge-primary">Hal. 33-36</span>
+              </div>
+            </div>
+
+            <div class="topic-card" data-query="Bagaimana pedoman umum pembidaian untuk patah tulang?">
+              <div class="topic-icon">🦴</div>
+              <h3 class="topic-title">Cedera Otot Rangka</h3>
+              <p class="topic-desc">Patah tulang terbuka vs tertutup, pedoman umum pembidaian melewati 2 sendi, dan penanganan terkilir (sprain).</p>
+              <div class="topic-meta">
+                <span>Bab: Cedera Otot Rangka</span>
+                <span class="badge badge-primary">Hal. 27-32</span>
+              </div>
+            </div>
+
+            <div class="topic-card" data-query="Bagaimana penanganan korban pingsan atau sengatan panas heatstroke?">
+              <div class="topic-icon">☀️</div>
+              <h3 class="topic-title">Kedaruratan Medis</h3>
+              <p class="topic-desc">Penanganan pingsan (sinkop), paparan panas (kejang panas, kelelahan panas, heatstroke), dan hipotermia.</p>
+              <div class="topic-meta">
+                <span>Bab: Kedaruratan Medis</span>
+                <span class="badge badge-primary">Hal. 43-48</span>
+              </div>
+            </div>
+
+            <div class="topic-card" data-query="Apa pertolongan pertama pada korban keracunan dan gigitan ular berbisa?">
+              <div class="topic-icon">⚠️</div>
+              <h3 class="topic-title">Keracunan & Gigitan</h3>
+              <p class="topic-desc">Jalur racun pernapasan/pencernaan, imobilisasi gigitan ular tanpa memotong luka, dan pantau jalan napas.</p>
+              <div class="topic-meta">
+                <span>Bab: Keracunan</span>
+                <span class="badge badge-primary">Hal. 49-60</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. CHAT VIEW (TANYA HELPME!) -->
+      <section id="view-chat" class="view-section">
+        <div class="chat-layout">
+          <!-- Sidebar -->
+          <aside class="chat-sidebar">
+            <div class="chat-sidebar-header">
+              <h3 style="font-size:0.95rem;font-weight:700;color:#FFF;">Riwayat Tanya</h3>
+              <button class="btn btn-primary btn-sm" id="btn-new-chat">+ Baru</button>
+            </div>
+            <div class="chat-sessions-list" id="chat-sessions-list">
+              <!-- Injected via app.js -->
+            </div>
+            <div style="padding-top: 1rem; border-top: 1px solid var(--border-subtle); font-size: 0.75rem; color: var(--text-subtle);">
+              <span>🛡️ Grounded RAG • Sumber PMI Terverifikasi</span>
+            </div>
+          </aside>
+
+          <!-- Main Chat Panel -->
+          <div class="chat-main">
+            <!-- Messages Container -->
+            <div class="chat-messages" id="chat-messages">
+              <div style="text-align:center;margin:auto;max-width:500px;color:var(--text-muted);">
+                <div style="font-size:2.5rem;margin-bottom:0.75rem;">🩹</div>
+                <h3 style="color:#FFF;margin-bottom:0.5rem;">HelpMe! Siap Membantu</h3>
+                <p style="font-size:0.9rem;">Tanyakan seputar langkah pertolongan pertama, penilaian korban, balut bidai, resusitasi, atau penanganan luka PMR WIRA.</p>
+              </div>
+            </div>
+
+            <!-- Input Container -->
+            <div class="chat-input-container">
+              <div class="prompt-suggestions">
+                <span class="prompt-pill">Bagaimana langkah penilaian korban ASNT?</span>
+                <span class="prompt-pill">Penanganan perdarahan luar</span>
+                <span class="prompt-pill">Pedoman umum pembidaian</span>
+                <span class="prompt-pill">Penanganan luka bakar air mendidih</span>
+                <span class="prompt-pill">Pertolongan pertama gigitan ular</span>
+              </div>
+
+              <form class="chat-form" id="chat-form">
+                <input type="text" id="chat-input" class="chat-input" placeholder="Tanyakan kondisi korban atau materi pertolongan pertama..." autocomplete="off">
+                <button type="submit" class="btn btn-primary" id="btn-send-chat">Kirim</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. MATERI PANDUAN (MATERIALS ENCYCLOPEDIA) -->
+      <section id="view-materials" class="view-section">
+        <div style="max-width: 1200px; margin: 2rem auto; padding: 0 1.5rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:2rem;">
+            <div>
+              <h1 style="font-size:2.2rem;font-weight:800;color:#FFF;">Ensiklopedia Materi PMR Wira</h1>
+              <p style="color:var(--text-muted);font-size:0.95rem;">Kurikulum resmi pertolongan pertama Palang Merah Remaja Tingkat Wira PMI Pusat.</p>
+            </div>
+            
+            <div style="display:flex;gap:0.75rem;align-items:center;">
+              <select id="category-filter" class="form-control" style="width:auto;">
+                <option value="">Semua Kategori</option>
+              </select>
+              <input type="text" id="material-search" class="form-control" placeholder="Cari materi..." style="width:240px;">
+            </div>
+          </div>
+
+          <div class="quick-grid" id="materials-grid">
+            <!-- Injected via app.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. MATERIAL DETAIL -->
+      <section id="view-material-detail" class="view-section">
+        <div id="material-detail-content">
+          <!-- Injected via app.js -->
+        </div>
+      </section>
+
+      <!-- 5. SUMBER & PEDOMAN (SOURCES) -->
+      <section id="view-sources" class="view-section">
+        <div style="max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem;">
+          <div style="margin-bottom:2rem;">
+            <h1 style="font-size:2.2rem;font-weight:800;color:#FFF;">Sumber Pengetahuan & Otoritas</h1>
+            <p style="color:var(--text-muted);font-size:0.95rem;">HelpMe! mematuhi prinsip <em>Source of Truth</em> dengan hierarki prioritas sumber yang diverifikasi administrator.</p>
+          </div>
+
+          <div id="sources-list-container">
+            <!-- Injected via app.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. PROFIL PENGGUNA -->
+      <section id="view-profile" class="view-section">
+        <div style="max-width: 600px; margin: 3rem auto; padding: 0 1.5rem;">
+          <div class="topic-card">
+            <div style="text-align:center;margin-bottom:1.5rem;">
+              <div style="width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#DC2626,#991B1B);color:#FFF;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 1rem;">👤</div>
+              <h2 id="profile-name-display" style="font-size:1.4rem;color:#FFF;">-</h2>
+              <p id="profile-role-display" style="color:#FDA4AF;font-size:0.85rem;font-weight:600;">-</p>
+              <p id="profile-email-display" style="color:var(--text-subtle);font-size:0.8rem;">-</p>
+            </div>
+
+            <form id="profile-form">
+              <div class="form-group">
+                <label class="form-label">Nama Lengkap</label>
+                <input type="text" id="input-profile-name" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Alamat Email</label>
+                <input type="email" id="input-profile-email" class="form-control" required>
+              </div>
+              <hr style="border:0;border-top:1px solid var(--border-subtle);margin:1.5rem 0;">
+              <h4 style="font-size:0.95rem;color:#FFF;margin-bottom:1rem;">Ubah Password (Opsional)</h4>
+              <div class="form-group">
+                <label class="form-label">Password Saat Ini</label>
+                <input type="password" id="input-profile-curpass" class="form-control" placeholder="Kosongkan jika tidak ingin mengubah">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Password Baru</label>
+                <input type="password" id="input-profile-newpass" class="form-control" placeholder="Minimal 6 karakter">
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width:100%;margin-top:0.5rem;">Simpan Perubahan</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. ADMIN DASHBOARD & MANAGEMENT -->
+      <section id="view-admin" class="view-section">
+        <div class="admin-container">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+            <div>
+              <h1 style="font-size:2rem;font-weight:800;color:#FFF;">Admin Control Center</h1>
+              <p style="color:var(--text-muted);font-size:0.9rem;">Pusat pengelolaan Knowledge Base, Versioning, Review Dokumen, dan Audit Trail.</p>
+            </div>
+            <div>
+              <span class="badge badge-primary">Mode Administrator</span>
+            </div>
+          </div>
+
+          <!-- Admin Sub-Navigation Tabs -->
+          <div class="admin-nav-tabs">
+            <button class="admin-tab-btn active" data-tab="overview">📊 Ringkasan</button>
+            <button class="admin-tab-btn" data-tab="materials">📚 Manajemen Materi</button>
+            <button class="admin-tab-btn" data-tab="sources">📜 Manajemen Sumber</button>
+            <button class="admin-tab-btn" data-tab="upload">📤 Ingestion / Upload</button>
+            <button class="admin-tab-btn" data-tab="review">⚖️ Review Center</button>
+            <button class="admin-tab-btn" data-tab="diff">🔍 Compare Diff</button>
+            <button class="admin-tab-btn" data-tab="users">👥 Pengguna</button>
+            <button class="admin-tab-btn" data-tab="ailogs">🤖 AI Quality & Logs</button>
+            <button class="admin-tab-btn" data-tab="audit">📝 Audit Trail</button>
+            <button class="admin-tab-btn" data-tab="settings">⚙️ Pengaturan Sistem</button>
+          </div>
+
+          <!-- Tab 1: Overview -->
+          <div id="admin-tab-overview" class="admin-tab-content">
+            <div class="stat-grid" id="admin-stats-grid">
+              <!-- Injected via app.js -->
+            </div>
+            <div style="background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:1.5rem;">
+              <h3 style="font-size:1.1rem;color:#FFF;margin-bottom:1rem;">🕒 Aktivitas Perubahan Terkini</h3>
+              <div id="admin-recent-changes">
+                <!-- Injected via app.js -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 2: Materials -->
+          <div id="admin-tab-materials" class="admin-tab-content" style="display:none;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Judul Materi</th>
+                    <th>Kategori</th>
+                    <th>Versi</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-materials-table-body">
+                  <!-- Injected via app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Tab 3: Sources -->
+          <div id="admin-tab-sources" class="admin-tab-content" style="display:none;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Judul Sumber</th>
+                    <th>Organisasi</th>
+                    <th>Otoritas</th>
+                    <th>Versi Aktif</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-sources-table-body">
+                  <!-- Injected via app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Tab 4: Upload / Ingestion -->
+          <div id="admin-tab-upload" class="admin-tab-content" style="display:none;">
+            <div class="topic-card" style="max-width:700px;margin:0 auto;">
+              <h3 style="font-size:1.2rem;color:#FFF;margin-bottom:0.5rem;">📤 Unggah Dokumen Panduan Baru (PDF / TXT / Markdown)</h3>
+              <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.5rem;">
+                Dokumen yang diunggah akan diekstrak teksnya secara otomatis, dibagi menjadi potongan knowledge (*chunks*), dan disimpan dengan status <strong>DRAFT</strong> untuk peninjauan di Review Center sebelum diaktifkan.
+              </p>
+
+              <form id="admin-upload-form">
+                <div class="form-group">
+                  <label class="form-label">Pilih Dokumen Sumber Rujukan</label>
+                  <select id="upload-source-select" class="form-control" required></select>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                  <div class="form-group">
+                    <label class="form-label">Nomor Versi Baru</label>
+                    <input type="text" id="upload-version-input" class="form-control" placeholder="Contoh: 2.0" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Edisi / Keterangan</label>
+                    <input type="text" id="upload-edition-input" class="form-control" placeholder="Contoh: Edisi Revisi 2026">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Nama Bab / Topik</label>
+                  <input type="text" id="upload-chapter-input" class="form-control" placeholder="Contoh: Protokol Resusitasi Terbaru" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Pilih File (.pdf, .txt, .md)</label>
+                  <input type="file" id="upload-file-input" class="form-control" accept=".pdf,.txt,.md,.markdown" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width:100%;margin-top:1rem;">Mulai Upload & Indexing</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Tab 5: Review Center -->
+          <div id="admin-tab-review" class="admin-tab-content" style="display:none;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+              <div class="topic-card">
+                <h3 style="font-size:1.1rem;color:#FFF;margin-bottom:1rem;">📜 Versi Dokumen Menunggu Review</h3>
+                <div id="review-versions-list">
+                  <!-- Injected via app.js -->
+                </div>
+              </div>
+              <div class="topic-card">
+                <h3 style="font-size:1.1rem;color:#FFF;margin-bottom:1rem;">🚩 Jawaban AI Memerlukan QC (Flagged / Unhelpful)</h3>
+                <div id="review-flagged-list">
+                  <!-- Injected via app.js -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 6: Diff Comparison -->
+          <div id="admin-tab-diff" class="admin-tab-content" style="display:none;">
+            <div class="topic-card" style="margin-bottom:1.5rem;">
+              <h3 style="font-size:1.2rem;color:#FFF;margin-bottom:1rem;">🔍 Bandingkan Dua Versi (Version Diff)</h3>
+              <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;">
+                <div class="form-group" style="margin-bottom:0;">
+                  <label class="form-label">Tipe Objek</label>
+                  <select id="diff-type-select" class="form-control">
+                    <option value="source">Versi Sumber</option>
+                    <option value="material">Versi Materi</option>
+                  </select>
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                  <label class="form-label">ID Versi 1 (Lama)</label>
+                  <input type="number" id="diff-v1-input" class="form-control" placeholder="1" style="width:110px;">
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                  <label class="form-label">ID Versi 2 (Baru)</label>
+                  <input type="number" id="diff-v2-input" class="form-control" placeholder="2" style="width:110px;">
+                </div>
+                <button class="btn btn-primary" id="btn-run-diff">Bandingkan Versi</button>
+              </div>
+            </div>
+            <div id="diff-results-container"></div>
+          </div>
+
+          <!-- Tab 7: Users -->
+          <div id="admin-tab-users" class="admin-tab-content" style="display:none;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nama Pengguna</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Peran (Role)</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-users-table-body">
+                  <!-- Injected via app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Tab 8: AI Logs -->
+          <div id="admin-tab-ailogs" class="admin-tab-content" style="display:none;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Pertanyaan Pengguna</th>
+                    <th>Keyakinan</th>
+                    <th>Feedback</th>
+                    <th>Status QC</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-ailogs-table-body">
+                  <!-- Injected via app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Tab 9: Audit Trail -->
+          <div id="admin-tab-audit" class="admin-tab-content" style="display:none;">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Aksi</th>
+                    <th>Entitas</th>
+                    <th>Pengguna</th>
+                    <th>Alasan</th>
+                    <th>Waktu</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-audit-table-body">
+                  <!-- Injected via app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Tab 10: System Settings -->
+          <div id="admin-tab-settings" class="admin-tab-content" style="display:none;">
+            <div class="topic-card" style="max-width:650px;margin:0 auto;">
+              <h3 style="font-size:1.2rem;color:#FFF;margin-bottom:1.25rem;">⚙️ Konfigurasi Sistem & Aturan AI</h3>
+              <form id="admin-settings-form">
+                <div class="form-group">
+                  <label class="form-label">Model AI (Google Gemini)</label>
+                  <select id="setting-ai-model" class="form-control">
+                    <option value="gemini-3.8-flash">Google Gemini 3.8 Flash (Generasi Terkini / Rekomendasi PMR)</option>
+                    <option value="gemini-3.6-flash">Google Gemini 3.6 Flash (Sangat Stabil &amp; Cepat)</option>
+                    <option value="gemini-3.7-flash">Google Gemini 3.7 Flash</option>
+                    <option value="gemini-3.5-flash">Google Gemini 3.5 Flash</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Grounding RAG Ketat (Anti-Halusinasi)</label>
+                  <select id="setting-strict-rag" class="form-control">
+                    <option value="true">Aktif (Hanya Menjawab Berdasarkan Chunks Terverifikasi)</option>
+                    <option value="false">Nonaktif</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Bobot Prioritas Rujukan PMI PMR WIRA</label>
+                  <select id="setting-pmi-priority" class="form-control">
+                    <option value="HIGHEST">Tertinggi (Primary 1.5x Multiplier)</option>
+                    <option value="STANDARD">Standar (1.0x)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Banner Peringatan Kedaruratan Medis</label>
+                  <select id="setting-safety-banner" class="form-control">
+                    <option value="true">Tampilkan Otomatis saat Kedaruratan Terdeteksi</option>
+                    <option value="false">Nonaktifkan Banner</option>
+                  </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width:100%;margin-top:1rem;">Simpan Konfigurasi</button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-info">
+          <strong style="color:#FFF;">HelpMe! — Panduan Pertolongan Pertama PMR WIRA</strong>
+          <p>Didedikasikan untuk pendidikan kepalangmerahan dan kesiapsiagaan medis dasar bagi anggota PMR Wira di seluruh Indonesia.</p>
+        </div>
+        <div class="footer-badge">
+          <span>Hak Cipta Pedoman: PMI Pusat (2008)</span>
+          <span>•</span>
+          <span>Darurat Medis: Hubungi 118 / 119</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- SOURCE REFERENCE DRAWER -->
+  <div id="source-drawer" class="drawer">
+    <div class="drawer-header">
+      <h3 id="drawer-title" style="font-size:1.1rem;color:#FFF;">Rujukan Sumber</h3>
+      <button id="drawer-close-btn" class="modal-close-btn">✕</button>
+    </div>
+    <div id="drawer-body" class="drawer-body">
+      <!-- Injected via app.js -->
+    </div>
+  </div>
+
+  <!-- AUTH MODAL (LOGIN & REGISTER) -->
+  <div id="auth-modal" class="modal-backdrop">
+    <div class="modal-card" style="max-width:480px;">
+      <div class="modal-header">
+        <h3 class="modal-title">🔐 Akses Akun HelpMe!</h3>
+        <button id="auth-modal-close" class="modal-close-btn">✕</button>
+      </div>
+      <div class="modal-body">
+        <!-- Tab selector -->
+        <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem;border-bottom:1px solid var(--border-subtle);padding-bottom:0.5rem;">
+          <button id="tab-btn-login" class="btn btn-secondary btn-sm active" style="flex:1;">Masuk</button>
+          <button id="tab-btn-register" class="btn btn-secondary btn-sm" style="flex:1;">Daftar Akun Baru</button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="login-form">
+          <div class="form-group">
+            <label class="form-label">Username atau Email</label>
+            <input type="text" id="login-identifier" class="form-control" required placeholder="Masukkan username atau email">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" id="login-password" class="form-control" required placeholder="••••••••">
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;margin-top:0.5rem;">Masuk Sekarang</button>
+        </form>
+
+        <!-- Register Form -->
+        <form id="register-form" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">Nama Lengkap</label>
+            <input type="text" id="reg-name" class="form-control" placeholder="Ahmad Wira" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Username</label>
+            <input type="text" id="reg-username" class="form-control" placeholder="ahmadwira" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Alamat Email</label>
+            <input type="email" id="reg-email" class="form-control" placeholder="ahmad@sekolah.sch.id" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" id="reg-password" class="form-control" placeholder="Minimal 6 karakter" required>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;margin-top:0.5rem;">Daftar Akun PMR</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDIT MATERIAL MODAL -->
+  <div id="edit-material-modal" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">✏️ Perbarui Isi Materi Panduan</h3>
+        <button id="edit-mat-close" class="modal-close-btn">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="edit-material-form">
+          <input type="hidden" id="edit-mat-id">
+          <div class="form-group">
+            <label class="form-label">Judul Materi</label>
+            <input type="text" id="edit-mat-title" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Ringkasan Materi</label>
+            <textarea id="edit-mat-summary" class="form-control" style="min-height:70px;"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Isi Lengkap Panduan (Markdown)</label>
+            <textarea id="edit-mat-content" class="form-control" style="min-height:220px;" required></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Alasan / Catatan Perubahan Versi</label>
+            <input type="text" id="edit-mat-reason" class="form-control" placeholder="Contoh: Pembaruan teknik pembidaian sesuai standar PMI terbaru" required>
+          </div>
+          <div class="modal-footer" style="padding:1rem 0 0;">
+            <button type="submit" class="btn btn-primary">Simpan Versi Baru</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROLLBACK MATERIAL MODAL -->
+  <div id="rollback-material-modal" class="modal-backdrop">
+    <div class="modal-card" style="max-width:520px;">
+      <div class="modal-header">
+        <h3 class="modal-title">⏮️ Rollback Versi Materi</h3>
+        <button id="rollback-close" class="modal-close-btn">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">
+          Pilih versi materi sebelumnya yang ingin dipulihkan. Tindakan ini akan mengembalikan teks isi materi dan otomatis mencatat riwayat pemulihan dalam <strong>Audit Log</strong>.
+        </p>
+        <form id="rollback-form">
+          <div class="form-group">
+            <label class="form-label">Pilih Target Versi Pemulihan</label>
+            <select id="rollback-version-select" class="form-control" required></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Alasan Rollback</label>
+            <input type="text" id="rollback-reason" class="form-control" placeholder="Contoh: Koreksi redaksi darurat kembali ke versi resmi awal" required>
+          </div>
+          <div class="modal-footer" style="padding:1rem 0 0;">
+            <button type="submit" class="btn btn-outline-danger">Konfirmasi & Rollback Data</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/js/api.js"></script>
+  <script src="/js/state.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

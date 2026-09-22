@@ -1,0 +1,31 @@
+{
+  "name": "YCWC PROJECT LOMBA",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js",
+    "seed": "node -e 'import(\"./server/db/seed.js\").then(m => m.seedDatabase())'",
+    "test": "node tests/auth.test.js && node tests/rag.test.js && node tests/versioning.test.js && node tests/security.test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.3.0",
+      "onFail": "download"
+    }
+  },
+  "type": "module",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.3.0"
+  }
+}
