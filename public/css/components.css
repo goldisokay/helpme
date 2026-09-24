@@ -56,8 +56,8 @@
 
 /* CHAT INTERFACE */
 .chat-layout {
-  display: grid;
-  grid-template-columns: 280px minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
   height: 100%;
   max-height: 100%;
   width: 100%;
@@ -66,6 +66,13 @@
   position: relative;
   min-height: 0;
   box-sizing: border-box;
+}
+
+@media (min-width: 769px) {
+  .chat-layout {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+  }
 }
 
 .chat-sidebar {
@@ -937,6 +944,19 @@ textarea.form-control {
    COMPONENTS RESPONSIVE STYLES
    ==================================================== */
 @media (max-width: 768px) {
+  .chat-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .chat-main {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 !important;
+  }
+
   /* Emergency banner */
   .emergency-banner {
     padding: 0.75rem 0.85rem;

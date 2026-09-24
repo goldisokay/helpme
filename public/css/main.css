@@ -876,8 +876,16 @@ body.chat-mode .footer {
   }
 
   .chat-layout {
-    grid-template-columns: 1fr;
-    height: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .chat-main {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 !important;
   }
 
   /* Mobile Chat Sidebar Overlay / Drawer */
