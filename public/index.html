@@ -152,9 +152,12 @@
       <section id="view-chat" class="view-section">
         <div class="chat-layout">
           <!-- Sidebar -->
-          <aside class="chat-sidebar">
+          <aside class="chat-sidebar" id="chat-sidebar">
             <div class="chat-sidebar-header">
-              <h3 style="font-size:0.95rem;font-weight:700;color:#FFF;">Riwayat Tanya</h3>
+              <div class="chat-sidebar-title-wrap">
+                <button class="chat-sidebar-close-btn" id="btn-close-chat-sidebar" title="Tutup Riwayat" aria-label="Tutup Riwayat">✕</button>
+                <h3 style="font-size:0.95rem;font-weight:700;color:#FFF;margin:0;">Riwayat Tanya</h3>
+              </div>
               <button class="btn btn-primary btn-sm" id="btn-new-chat">+ Baru</button>
             </div>
             <div class="chat-sessions-list" id="chat-sessions-list">
@@ -170,7 +173,7 @@
             <!-- Mobile Chat Bar -->
             <div class="chat-mobile-header" id="chat-mobile-header">
               <button class="btn btn-secondary btn-sm" id="btn-chat-mobile-back">← Beranda</button>
-              <span style="font-weight:700;font-size:0.9rem;color:#FFF;">💬 Tanya HelpMe!</span>
+              <span class="chat-mobile-title">💬 Tanya HelpMe!</span>
               <button class="btn btn-secondary btn-sm" id="btn-toggle-chat-sidebar">📋 Riwayat</button>
             </div>
 

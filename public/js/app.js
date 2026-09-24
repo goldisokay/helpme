@@ -127,6 +127,14 @@ function setupNavigation() {
       closeMobileChatSidebar();
     });
   }
+
+  // Close button inside the sidebar drawer
+  const closeSidebarBtn = document.getElementById('btn-close-chat-sidebar');
+  if (closeSidebarBtn) {
+    closeSidebarBtn.addEventListener('click', () => {
+      closeMobileChatSidebar();
+    });
+  }
 }
 
 function updateNavUser(user) {
