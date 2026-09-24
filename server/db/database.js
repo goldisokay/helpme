@@ -1,4 +1,6 @@
+import 'dotenv/config';
 import { DatabaseSync } from 'node:sqlite';
+import Database from 'libsql';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -6,20 +8,48 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const DATA_DIR = path.resolve(__dirname, '../../data');
-if (!fs.existsSync(DATA_DIR)) {
-  fs.mkdirSync(DATA_DIR, { recursive: true });
+const TURSO_DATABASE_URL = process.env.TURSO_DATABASE_URL;
+const TURSO_AUTH_TOKEN = process.env.TURSO_AUTH_TOKEN;
+
+let dbInstance;
+
+if (TURSO_DATABASE_URL && TURSO_AUTH_TOKEN) {
+  const syncUrl = TURSO_DATABASE_URL.startsWith('libsql://')
+    ? TURSO_DATABASE_URL.replace('libsql://', 'https://')
+    : TURSO_DATABASE_URL;
+
+  const isVercel = process.env.VERCEL === '1';
+  const replicaPath = isVercel
+    ? '/tmp/helpme_turso.db'
+    : path.resolve(__dirname, '../../data/helpme_turso.db');
+
+  dbInstance = new Database(replicaPath, {
+    syncUrl,
+    authToken: TURSO_AUTH_TOKEN
+  });
+
+  try {
+    await dbInstance.sync();
+    console.log('✅ Terhubung dan tersinkronisasi dengan Database Turso Cloud!');
+  } catch (err) {
+    console.warn('⚠️ Peringatan sinkronisasi awal Turso:', err.message);
+  }
+} else {
+  const DATA_DIR = path.resolve(__dirname, '../../data');
+  if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+  }
+
+  const DB_PATH = process.env.DATABASE_PATH 
+    ? path.resolve(process.cwd(), process.env.DATABASE_PATH)
+    : path.join(DATA_DIR, 'helpme.db');
+
+  dbInstance = new DatabaseSync(DB_PATH);
+  dbInstance.exec('PRAGMA foreign_keys = ON;');
+  dbInstance.exec('PRAGMA journal_mode = WAL;');
 }
 
-const DB_PATH = process.env.DATABASE_PATH 
-  ? path.resolve(process.cwd(), process.env.DATABASE_PATH)
-  : path.join(DATA_DIR, 'helpme.db');
-
-export const db = new DatabaseSync(DB_PATH);
-
-// Enable foreign keys and WAL mode for reliability
-db.exec('PRAGMA foreign_keys = ON;');
-db.exec('PRAGMA journal_mode = WAL;');
+export const db = dbInstance;
 
 export function initDatabase() {
   db.exec(`

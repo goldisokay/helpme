@@ -22,7 +22,7 @@
 .emergency-banner-icon {
   font-size: 1.6rem;
   color: #F87171;
-  flex-shrink: 0;
+  flex-shrink: 0; /* CRITICAL: Prevent banner icon distortion */
   line-height: 1;
 }
 
@@ -197,7 +197,9 @@
   display: flex;
   gap: 1rem;
   max-width: 860px;
+  width: 100%;
   animation: fadeIn 0.2s ease;
+  min-width: 0;
 }
 
 .chat-bubble.user {
@@ -239,6 +241,9 @@
   color: var(--text-main);
   box-shadow: var(--shadow-sm);
   position: relative;
+  min-width: 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .chat-bubble.user .chat-content {
@@ -254,15 +259,18 @@
 /* AI Model Badge in Chat */
 .ai-model-tag {
   display: inline-flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.35rem 0.5rem;
   background: rgba(220, 38, 38, 0.12);
   border: 1px solid rgba(220, 38, 38, 0.28);
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-sm);
   font-size: 0.75rem;
   color: #FCA5A5;
   margin-bottom: 0.85rem;
+  max-width: 100%;
+  line-height: 1.35;
 }
 
 .ai-pulse-dot {
@@ -347,6 +355,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  max-width: 100%;
 }
 
 .citation-chip {
@@ -361,6 +370,9 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
+  max-width: 100%;
+  white-space: normal;
+  word-break: break-word;
 }
 
 .citation-chip:hover {
@@ -379,6 +391,8 @@
   border-top: 1px dashed var(--border-subtle);
   font-size: 0.8rem;
   color: var(--text-subtle);
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .feedback-group {
@@ -779,14 +793,15 @@ textarea.form-control {
 .drawer {
   position: fixed;
   top: 0;
-  right: -500px;
+  right: -520px;
   width: 480px;
   max-width: 90vw;
   height: 100vh;
+  height: 100dvh;
   background: var(--bg-card);
   border-left: 1px solid var(--border-subtle);
   box-shadow: var(--shadow-lg);
-  z-index: 1050;
+  z-index: 1060;
   transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
@@ -808,4 +823,170 @@ textarea.form-control {
   padding: 1.5rem;
   overflow-y: auto;
   flex: 1;
+}
+
+/* ====================================================
+   COMPONENTS RESPONSIVE STYLES
+   ==================================================== */
+@media (max-width: 768px) {
+  /* Emergency banner */
+  .emergency-banner {
+    padding: 0.75rem 0.85rem;
+    gap: 0.65rem;
+    margin-bottom: 1rem;
+  }
+  .emergency-banner-icon {
+    font-size: 1.35rem;
+  }
+  .emergency-banner-content h4 {
+    font-size: 0.88rem;
+  }
+  .emergency-banner-content p {
+    font-size: 0.8rem;
+  }
+
+  /* Chat Bubbles */
+  .chat-bubble {
+    gap: 0.5rem;
+    max-width: 100%;
+  }
+
+  .chat-avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+  }
+
+  .chat-content {
+    padding: 0.85rem 1rem;
+    font-size: 0.9rem;
+    border-radius: var(--radius-md);
+  }
+
+  .ai-model-tag {
+    font-size: 0.68rem;
+    padding: 0.2rem 0.45rem;
+    gap: 0.3rem;
+  }
+
+  .ai-model-grounding {
+    display: inline;
+    font-size: 0.68rem;
+  }
+
+  .chat-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding-top: 0.6rem;
+  }
+
+  .feedback-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    width: 100%;
+  }
+
+  .feedback-btn {
+    font-size: 0.72rem;
+    padding: 0.2rem 0.45rem;
+  }
+
+  /* Modals */
+  .modal-backdrop {
+    padding: 0.75rem;
+  }
+
+  .modal-card {
+    max-height: 94vh;
+    max-height: 94dvh;
+    border-radius: var(--radius-lg);
+  }
+
+  .modal-header {
+    padding: 1rem 1.15rem;
+  }
+
+  .modal-title {
+    font-size: 1.05rem;
+  }
+
+  .modal-body {
+    padding: 1.15rem;
+  }
+
+  .modal-footer {
+    padding: 0.85rem 1.15rem;
+  }
+
+  /* Drawer on Mobile */
+  .drawer {
+    width: 100%;
+    max-width: 100vw;
+    right: -100vw;
+  }
+
+  /* Admin Control Center */
+  .admin-container {
+    padding: 0 0.85rem;
+    margin: 1.25rem auto;
+  }
+
+  .admin-nav-tabs {
+    gap: 0.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .admin-tab-btn {
+    font-size: 0.82rem;
+    padding: 0.5rem 0.85rem;
+  }
+
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .stat-card {
+    padding: 1rem;
+  }
+
+  .stat-val {
+    font-size: 1.6rem;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+  }
+
+  .responsive-two-col {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  /* Tables & Diff */
+  .table-responsive {
+    border-radius: var(--radius-md);
+  }
+
+  .data-table th, .data-table td {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+
+  .diff-container {
+    padding: 0.75rem;
+    font-size: 0.75rem;
+    max-height: 320px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stat-grid {
+    grid-template-columns: 1fr;
+  }
 }

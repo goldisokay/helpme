@@ -50,7 +50,7 @@
             <span>🛡️</span> Berbasis Knowledge Base Resmi PMI PMR WIRA (Juni 2008)
           </div>
           <h1 class="hero-title">
-            Pertolongan Pertama Tepat,<br>Akurat & Terverifikasi
+            Pertolongan Pertama Tepat,<br class="hero-br">Akurat & Terverifikasi
           </h1>
           <p class="hero-subtitle">
             Asisten rujukan cerdas khusus anggota Palang Merah Remaja (PMR) tingkat WIRA. Ditenagai sistem RAG berlandaskan buku pedoman resmi Palang Merah Indonesia dengan standar keselamatan penolong (3A).
@@ -66,7 +66,7 @@
           </div>
 
           <!-- Quick Search Bar -->
-          <div style="max-width: 650px; margin: 0 auto 3rem;">
+          <div class="hero-quick-search" style="max-width: 650px; margin: 0 auto 3rem;">
             <div class="chat-form" style="padding: 0.6rem 1rem;">
               <span style="font-size: 1.2rem; color: var(--text-subtle);">🔍</span>
               <input type="text" id="quick-search-input" class="chat-input" placeholder="Cari penanganan cepat: penilaian korban, luka bakar, patah tulang, pingsan...">
@@ -167,6 +167,13 @@
 
           <!-- Main Chat Panel -->
           <div class="chat-main">
+            <!-- Mobile Chat Bar -->
+            <div class="chat-mobile-header" id="chat-mobile-header">
+              <button class="btn btn-secondary btn-sm" id="btn-chat-mobile-back">← Beranda</button>
+              <span style="font-weight:700;font-size:0.9rem;color:#FFF;">💬 Tanya HelpMe!</span>
+              <button class="btn btn-secondary btn-sm" id="btn-toggle-chat-sidebar">📋 Riwayat</button>
+            </div>
+
             <!-- Messages Container -->
             <div class="chat-messages" id="chat-messages">
               <div style="text-align:center;margin:auto;max-width:500px;color:var(--text-muted);">
@@ -197,14 +204,14 @@
 
       <!-- 3. MATERI PANDUAN (MATERIALS ENCYCLOPEDIA) -->
       <section id="view-materials" class="view-section">
-        <div style="max-width: 1200px; margin: 2rem auto; padding: 0 1.5rem;">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:2rem;">
+        <div class="page-container" style="max-width: 1200px; margin: 2rem auto; padding: 0 1.5rem;">
+          <div class="materials-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:2rem;">
             <div>
-              <h1 style="font-size:2.2rem;font-weight:800;color:#FFF;">Ensiklopedia Materi PMR Wira</h1>
-              <p style="color:var(--text-muted);font-size:0.95rem;">Kurikulum resmi pertolongan pertama Palang Merah Remaja Tingkat Wira PMI Pusat.</p>
+              <h1 class="page-title" style="font-size:2.2rem;font-weight:800;color:#FFF;">Ensiklopedia Materi PMR Wira</h1>
+              <p class="page-subtitle" style="color:var(--text-muted);font-size:0.95rem;">Kurikulum resmi pertolongan pertama Palang Merah Remaja Tingkat Wira PMI Pusat.</p>
             </div>
             
-            <div style="display:flex;gap:0.75rem;align-items:center;">
+            <div class="materials-filter-bar" style="display:flex;gap:0.75rem;align-items:center;">
               <select id="category-filter" class="form-control" style="width:auto;">
                 <option value="">Semua Kategori</option>
               </select>
@@ -227,10 +234,10 @@
 
       <!-- 5. SUMBER & PEDOMAN (SOURCES) -->
       <section id="view-sources" class="view-section">
-        <div style="max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem;">
+        <div class="page-container" style="max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem;">
           <div style="margin-bottom:2rem;">
-            <h1 style="font-size:2.2rem;font-weight:800;color:#FFF;">Sumber Pengetahuan & Otoritas</h1>
-            <p style="color:var(--text-muted);font-size:0.95rem;">HelpMe! mematuhi prinsip <em>Source of Truth</em> dengan hierarki prioritas sumber yang diverifikasi administrator.</p>
+            <h1 class="page-title" style="font-size:2.2rem;font-weight:800;color:#FFF;">Sumber Pengetahuan & Otoritas</h1>
+            <p class="page-subtitle" style="color:var(--text-muted);font-size:0.95rem;">HelpMe! mematuhi prinsip <em>Source of Truth</em> dengan hierarki prioritas sumber yang diverifikasi administrator.</p>
           </div>
 
           <div id="sources-list-container">
@@ -371,7 +378,7 @@
                   <label class="form-label">Pilih Dokumen Sumber Rujukan</label>
                   <select id="upload-source-select" class="form-control" required></select>
                 </div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                <div class="responsive-two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
                   <div class="form-group">
                     <label class="form-label">Nomor Versi Baru</label>
                     <input type="text" id="upload-version-input" class="form-control" placeholder="Contoh: 2.0" required>
@@ -397,7 +404,7 @@
 
           <!-- Tab 5: Review Center -->
           <div id="admin-tab-review" class="admin-tab-content" style="display:none;">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+            <div class="responsive-two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
               <div class="topic-card">
                 <h3 style="font-size:1.1rem;color:#FFF;margin-bottom:1rem;">📜 Versi Dokumen Menunggu Review</h3>
                 <div id="review-versions-list">
@@ -563,6 +570,33 @@
       </div>
     </footer>
   </div>
+
+  <!-- CHAT SIDEBAR BACKDROP ON MOBILE -->
+  <div id="chat-sidebar-backdrop" class="chat-sidebar-backdrop"></div>
+
+  <!-- MOBILE BOTTOM NAVIGATION -->
+  <nav class="mobile-bottom-nav" id="mobile-bottom-nav">
+    <button class="mobile-nav-item active" data-view="landing" id="mobile-nav-landing">
+      <span class="mobile-nav-icon">🏠</span>
+      <span>Beranda</span>
+    </button>
+    <button class="mobile-nav-item" data-view="chat" id="mobile-nav-chat">
+      <span class="mobile-nav-icon">💬</span>
+      <span>Tanya AI</span>
+    </button>
+    <button class="mobile-nav-item" data-view="materials" id="mobile-nav-materials">
+      <span class="mobile-nav-icon">📚</span>
+      <span>Materi</span>
+    </button>
+    <button class="mobile-nav-item" data-view="sources" id="mobile-nav-sources">
+      <span class="mobile-nav-icon">📜</span>
+      <span>Sumber</span>
+    </button>
+    <button class="mobile-nav-item" data-view="profile" id="mobile-nav-profile">
+      <span class="mobile-nav-icon">👤</span>
+      <span id="mobile-nav-user-label">Akun</span>
+    </button>
+  </nav>
 
   <!-- SOURCE REFERENCE DRAWER -->
   <div id="source-drawer" class="drawer">

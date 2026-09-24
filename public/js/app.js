@@ -39,7 +39,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 // ROUTING & VIEW NAVIGATION
+function closeMobileChatSidebar() {
+  const sidebar = document.querySelector('.chat-sidebar');
+  const backdrop = document.getElementById('chat-sidebar-backdrop');
+  if (sidebar) sidebar.classList.remove('open');
+  if (backdrop) backdrop.classList.remove('active');
+}
+
 function navigateTo(viewName, params = {}) {
+  closeMobileChatSidebar();
+
   // Guard admin view
   if (viewName === 'admin') {
     if (!State.user || !['ADMIN', 'SUPER_ADMIN'].includes(State.user.role)) {
@@ -49,9 +58,14 @@ function navigateTo(viewName, params = {}) {
     }
   }
 
-  // Update navigation active states
+  // Update navigation active states (desktop navbar)
   document.querySelectorAll('.nav-link').forEach(link => {
     link.classList.toggle('active', link.dataset.view === viewName);
+  });
+
+  // Update navigation active states (mobile bottom nav)
+  document.querySelectorAll('.mobile-nav-item').forEach(item => {
+    item.classList.toggle('active', item.dataset.view === viewName);
   });
 
   // Toggle view sections
@@ -67,6 +81,11 @@ function navigateTo(viewName, params = {}) {
   // Toggle body chat-mode class for viewport height lock
   document.body.classList.toggle('chat-mode', viewName === 'chat');
 
+  // Scroll window to top when changing views
+  if (viewName !== 'chat') {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
   State.setView(viewName, params);
 }
 
@@ -75,6 +94,10 @@ function setupNavigation() {
     el.addEventListener('click', (e) => {
       e.preventDefault();
       const view = el.dataset.view;
+      if (view === 'profile' && !State.user) {
+        openAuthModal('login');
+        return;
+      }
       navigateTo(view);
     });
   });
@@ -83,10 +106,35 @@ function setupNavigation() {
   if (brand) {
     brand.addEventListener('click', () => navigateTo('landing'));
   }
+
+  // Mobile Chat top header controls
+  const mobileChatBack = document.getElementById('btn-chat-mobile-back');
+  if (mobileChatBack) {
+    mobileChatBack.addEventListener('click', () => navigateTo('landing'));
+  }
+
+  const toggleSidebarBtn = document.getElementById('btn-toggle-chat-sidebar');
+  const chatSidebar = document.querySelector('.chat-sidebar');
+  const chatBackdrop = document.getElementById('chat-sidebar-backdrop');
+
+  if (toggleSidebarBtn && chatSidebar && chatBackdrop) {
+    toggleSidebarBtn.addEventListener('click', () => {
+      chatSidebar.classList.toggle('open');
+      chatBackdrop.classList.toggle('active');
+    });
+
+    chatBackdrop.addEventListener('click', () => {
+      closeMobileChatSidebar();
+    });
+  }
 }
 
 function updateNavUser(user) {
   const container = document.getElementById('nav-user-actions');
+  const mobileUserLabel = document.getElementById('mobile-nav-user-label');
+  if (mobileUserLabel) {
+    mobileUserLabel.textContent = user ? (user.name.split(' ')[0] || 'Akun') : 'Masuk';
+  }
   if (!container) return;
 
   if (user) {
@@ -272,6 +320,7 @@ function renderSessionsList() {
 }
 
 async function createNewSession(title = 'Percakapan Baru') {
+  closeMobileChatSidebar();
   if (!State.user) {
     activeSessionId = 'guest';
     document.getElementById('chat-messages').innerHTML = '';
@@ -290,6 +339,7 @@ async function createNewSession(title = 'Percakapan Baru') {
 }
 
 async function selectSession(sessionId) {
+  closeMobileChatSidebar();
   activeSessionId = sessionId;
   renderSessionsList();
 

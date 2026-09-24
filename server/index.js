@@ -71,14 +71,16 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Initialize database schema and start server
+// Initialize database schema
 initDatabase();
 
-app.listen(PORT, () => {
-  console.log(`======================================================`);
-  console.log(`🚑 HelpMe! — Panduan Pertolongan Pertama PMR WIRA`);
-  console.log(`🚀 Server berjalan aktif pada: http://localhost:${PORT}`);
-  console.log(`======================================================`);
-});
+if (process.env.VERCEL !== '1') {
+  app.listen(PORT, () => {
+    console.log(`======================================================`);
+    console.log(`🚑 HelpMe! — Panduan Pertolongan Pertama PMR WIRA`);
+    console.log(`🚀 Server berjalan aktif pada: http://localhost:${PORT}`);
+    console.log(`======================================================`);
+  });
+}
 
 export default app;
